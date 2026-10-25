@@ -1,7 +1,7 @@
 {
   "name": "petwarden",
   "version": "1.0.0",
-  "description": "PetWarden: an offline-first Android app for everyday pet care: daily tasks, health records, planner, documents and local reminders.",
+  "description": "Offline-first pet care app for Android (Expo, React Native, TypeScript, SQLite): daily care tasks, weight, vaccinations, medications, vet visits, documents and exact local reminders. No account, no server, no tracking.",
   "license": "MIT",
   "repository": {
     "type": "git",

@@ -4,8 +4,9 @@
 
 # PetWarden
 
-**Small habits for happy paws.**
-An offline-first Android app for everyday pet care: daily tasks, health records, a planner, documents and reminders that fire on time. No account, no server, no tracking.
+**PetWarden — an offline-first pet care app for Android.** Track daily care tasks, weight, vaccinations, medications, vet visits and documents for every pet: dogs, cats, rabbits, birds and more. Exact local reminders, JSON backup and restore. Built with Expo, React Native and SQLite. No account, no server, no tracking, no internet permission.
+
+*Small habits for happy paws.*
 
 ![Platform](https://img.shields.io/badge/platform-Android-3DDC84?logo=android&logoColor=white)
 ![Expo SDK 57](https://img.shields.io/badge/Expo-SDK%2057-000020?logo=expo)
