@@ -1,0 +1,42 @@
+import assert from 'node:assert/strict';
+import { calendarDate, shiftDate, weekFor, canCheckDate, dayEntries, dayPart, timeline, rowAccents, repeatLabel } from '../src/features/planner/model.ts';
+import { setCopyLanguage } from '../src/lib/copy.ts';
+import { occursOn, repeatDays, validateCare } from '../src/features/care/model.ts';
+
+assert.deepEqual(weekFor('2026-10-11'), ['2026-10-05', '2026-10-06', '2026-10-07', '2026-10-08', '2026-10-09', '2026-10-10', '2026-10-11']);
+assert.deepEqual(weekFor('2027-01-01'), ['2026-12-28', '2026-12-29', '2026-12-30', '2026-12-31', '2027-01-01', '2027-01-02', '2027-01-03']);
+assert.equal(shiftDate('2024-02-28', 1), '2024-02-29');
+assert.equal(shiftDate('2026-03-28', 2), '2026-03-30');
+assert.equal(shiftDate('2026-10-24', 2), '2026-10-26');
+assert.throws(() => calendarDate('2026-02-29'));
+assert.throws(() => calendarDate('2026-1-01'));
+assert.equal(canCheckDate('2026-10-06', '2026-10-06'), true);
+assert.equal(canCheckDate('2026-10-05', '2026-10-06'), true);
+assert.equal(canCheckDate('2026-10-07', '2026-10-06'), false);
+assert.deepEqual(repeatDays('[5,1,5,3]'), [1, 3, 5]);
+assert.equal(occursOn('weekdays', '2026-10-10'), false);
+assert.equal(occursOn('[0,6]', '2026-10-11'), true);
+assert.equal(occursOn('[0,6]', '2026-10-09'), false);
+assert.throws(() => validateCare({ title: 'Nega', type: 'other', time: '08:00', repeatRule: '[]' }));
+assert.throws(() => repeatDays('[7]'));
+
+const task = { id: 1, petId: 1, type: 'meal' as const, title: 'Obrok', time: '08:00', repeatRule: 'daily', active: true, done: false };
+const vaccine = { id: 1, petId: 1, name: 'Vakcina', givenAt: null, nextDueAt: '2026-10-06', notes: '' };
+const visit = { id: 1, petId: 1, date: '2026-10-07', clinic: 'Ambulanta', reason: 'Kontrola', notes: '' };
+const medication = { id: 1, petId: 1, name: 'Terapija', dose: 'Sačuvano uputstvo', schedule: JSON.stringify({ times: ['08:00', '18:00'], repeatRule: 'daily' }), startDate: '2026-10-06', endDate: '2026-10-07' };
+const today = dayEntries('2026-10-06', [task], [vaccine], [visit], [medication]);
+assert.deepEqual(today.map(row => row.key), ['vaccine.1', 'care.1', 'medication.1.08:00', 'medication.1.18:00']);
+assert.equal(today[0].kind === 'health' && today[0].time, null); // Notification time must not become appointment time.
+assert.deepEqual(dayEntries('2026-10-07', [], [vaccine], [visit], [medication]).map(row => row.key), ['visit.1', 'medication.1.08:00', 'medication.1.18:00']);
+assert.deepEqual(dayEntries('2026-10-08', [], [vaccine], [visit], [medication]), []);
+assert.deepEqual(dayEntries('2026-10-05', [], [], [], [medication]), []);
+assert.equal(dayEntries('2026-10-20', [], [], [], [{ ...medication, endDate: null }]).length, 2);
+const timed = dayEntries('2026-10-07', [], [vaccine], [visit], [medication]);
+assert.deepEqual(timeline(timed).map(item => item.key), ['part.allDay', 'visit.1', 'part.morning', 'medication.1.08:00', 'part.evening', 'medication.1.18:00']);
+assert.deepEqual(rowAccents(timed), ['blush', 'sky']);
+assert.deepEqual([dayPart('11:59'), dayPart('12:00'), dayPart('16:59'), dayPart('17:00'), dayPart(null)], ['morning', 'afternoon', 'afternoon', 'evening', 'allDay']);
+assert.equal(repeatLabel('[1,3,5]'), 'Mon, Wed, Fri');
+setCopyLanguage('sr');
+assert.equal(repeatLabel('[1,3,5]'), 'Po, Sr, Pe');
+setCopyLanguage('en');
+console.log('Phase 5 checks passed: local weeks/DST/leap dates, recurrence, future check boundaries and chronological health/care aggregation.');

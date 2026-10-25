@@ -1,0 +1,58 @@
+name: Bug report
+description: A reproducible problem in the latest version of the app.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please read [CONTRIBUTING.md](../blob/master/CONTRIBUTING.md) first. This is a spare-time project: incomplete reports may be closed without a reply.
+        **Security problems:** do not report them here. Use the Security tab instead.
+  - type: input
+    id: version
+    attributes:
+      label: App version or commit
+      placeholder: e.g. 1.0.0 or a1b2c3d
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Phone model and Android version
+      placeholder: e.g. Pixel 8, Android 15
+    validations:
+      required: true
+  - type: dropdown
+    id: build
+    attributes:
+      label: Where did the app come from?
+      options:
+        - Official release from this repository
+        - I built it myself from unmodified source
+        - Modified or third-party build (not supported)
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open ...
+        2. Tap ...
+        3. See ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues and this is not a duplicate.
+          required: true
+        - label: My report contains no personal data (real names, pet photos, documents, phone numbers).
+          required: true

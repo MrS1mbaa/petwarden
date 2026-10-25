@@ -1,0 +1,94 @@
+{
+  "expo": {
+    "name": "PetWarden",
+    "slug": "petwarden",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/brand/app-icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "io.github.mrs1mbaa.petwarden"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#F7F7F3",
+        "foregroundImage": "./assets/brand/adaptive-foreground.png",
+        "monochromeImage": "./assets/brand/adaptive-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "allowBackup": false,
+      "package": "io.github.mrs1mbaa.petwarden",
+      "permissions": [
+        "android.permission.USE_EXACT_ALARM"
+      ],
+      "blockedPermissions": [
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "com.google.android.c2dm.permission.RECEIVE",
+        "com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE"
+      ],
+      "softwareKeyboardLayoutMode": "resize"
+    },
+    "web": {
+      "lang": "sr-Latn",
+      "favicon": "./assets/brand/app-icon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/brand/adaptive-foreground.png",
+          "imageWidth": 160,
+          "backgroundColor": "#F7F7F3",
+          "dark": {
+            "backgroundColor": "#191A18"
+          }
+        }
+      ],
+      "expo-sqlite",
+      "expo-image",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow PetWarden to use your photos for your pet's picture and documents.",
+          "cameraPermission": false,
+          "microphonePermission": false
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/brand/notification-icon.png",
+          "color": "#1E1E1E"
+        }
+      ],
+      "expo-sharing",
+      "expo-system-ui",
+      "./plugins/withReleaseSigning.js",
+      "./plugins/withoutFirebase.js",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "buildArchs": [
+              "arm64-v8a",
+              "armeabi-v7a"
+            ],
+            "enableMinifyInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true
+          }
+        }
+      ]
+    ],
+    "scheme": "petwarden",
+    "extra": {
+      "router": {}
+    },
+    "owner": "mrs1mba"
+  }
+}
