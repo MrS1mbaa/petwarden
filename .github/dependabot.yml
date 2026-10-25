@@ -1,0 +1,28 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
+    groups:
+      expo:
+        patterns:
+          - "expo"
+          - "expo-*"
+          - "@expo/*"
+      dev-tooling:
+        dependency-type: development
+    ignore:
+      # Expo CLI build tooling only; never bundled into the release APK.
+      # A forced npm audit fix here breaks the Expo CLI, so these are dismissed
+      # in the alerts view instead of patched.
+      - dependency-name: node-forge
+      - dependency-name: zod
+      - dependency-name: decode-uri-component
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
